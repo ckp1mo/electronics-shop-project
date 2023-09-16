@@ -3,6 +3,15 @@
 import pytest
 from src.item import Item
 
+@pytest.fixture
+def cvs_file():
+    return 'src/items.csv'
+
+
+@pytest.fixture
+def class_item():
+    return Item
+
 
 @pytest.fixture
 def smartphone():
@@ -17,3 +26,20 @@ def test_apply_discount(smartphone):
     assert smartphone.pay_rate == 1.0
     assert smartphone.apply_discount() is None
     assert smartphone.price == 10000
+
+
+def test_name(smartphone):
+    smartphone.name = 'СуперСмартфон'
+    assert smartphone.name == 'СуперСмарт'
+    smartphone.name = 'Кофеварка'
+    assert smartphone.name == 'Кофеварка'
+
+
+def test_instantiate_from_csv(cvs_file, class_item):
+    class_item.instantiate_from_csv(cvs_file)
+    assert len(Item.all) == 5
+
+
+def test_dtring_to_number():
+    assert Item.string_to_number('4.5') == 4
+    assert Item.string_to_number('3') == 3
