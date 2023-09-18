@@ -1,7 +1,7 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
-
 import pytest
 from src.item import Item
+
 
 @pytest.fixture
 def cvs_file():
@@ -15,17 +15,17 @@ def class_item():
 
 @pytest.fixture
 def smartphone():
-    return Item("Смартфон", 10000, 20)
+    return Item("iPhone 15", 124990, 20)
 
 
 def test_calculate_t_price(smartphone):
-    assert smartphone.calculate_total_price() == 200000
+    assert smartphone.calculate_total_price() == 2499800
 
 
 def test_apply_discount(smartphone):
     assert smartphone.pay_rate == 1.0
     assert smartphone.apply_discount() is None
-    assert smartphone.price == 10000
+    assert smartphone.price == 124990
 
 
 def test_name(smartphone):
@@ -40,6 +40,6 @@ def test_instantiate_from_csv(cvs_file, class_item):
     assert len(Item.all) == 5
 
 
-def test_dtring_to_number():
+def test_string_to_number():
     assert Item.string_to_number('4.5') == 4
     assert Item.string_to_number('3') == 3
