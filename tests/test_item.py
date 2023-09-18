@@ -43,3 +43,14 @@ def test_instantiate_from_csv(cvs_file, class_item):
 def test_string_to_number():
     assert Item.string_to_number('4.5') == 4
     assert Item.string_to_number('3') == 3
+
+
+def test_repr(smartphone):
+    smartphone.price = 18900
+    assert repr(smartphone) == "Item('iPhone 15', 18900, 20)"
+
+
+def test_str(smartphone):
+    assert str(smartphone) == 'iPhone 15'
+    smartphone.name = 'iPhone XR'
+    assert str(smartphone) == 'iPhone XR'
