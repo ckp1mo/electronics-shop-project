@@ -3,6 +3,13 @@ import pytest
 from src.item import Item
 
 
+class Item2:
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+
 @pytest.fixture
 def cvs_file():
     return 'src/items.csv'
@@ -54,3 +61,11 @@ def test_str(smartphone):
     assert str(smartphone) == 'iPhone 15'
     smartphone.name = 'iPhone XR'
     assert str(smartphone) == 'iPhone XR'
+
+
+def test_add(smartphone):
+    phone1 = Item('iPhone SE', 32000, 10)
+    phone2 = Item2('iPhone 6s', 17000, 10)
+    assert smartphone + phone1 == 30
+    with pytest.raises(ValueError):
+        smartphone + phone2
