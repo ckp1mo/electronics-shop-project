@@ -27,6 +27,14 @@ class Item:
     def __str__(self):
         return f'{self.__name}'
 
+    def __add__(self, other):
+        """
+        Складываем количество товара из родительских или дочерних экземпляров
+        """
+        if not issubclass(other.__class__, self.__class__):
+            raise ValueError('Складывать можно только объекты Item и дочерние от них.')
+        return self.quantity + other.quantity
+
     def calculate_total_price(self) -> float:
         """
         Рассчитывает общую стоимость конкретного товара в магазине.
