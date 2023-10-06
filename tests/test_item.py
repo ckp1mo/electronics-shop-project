@@ -11,8 +11,18 @@ class Item2:
 
 
 @pytest.fixture
-def cvs_file():
-    return 'src/items.csv'
+def csv_file():
+    return r'C:\Users\nekon\PycharmProjects\electronics-shop-project\src\items.csv'
+
+
+@pytest.fixture
+def csv_not_found():
+    return 'src/itms.csv'
+
+
+@pytest.fixture
+def csv_broken():
+    return r'C:\Users\nekon\PycharmProjects\electronics-shop-project\tests\test_broken_items.csv'
 
 
 @pytest.fixture
@@ -42,8 +52,8 @@ def test_name(smartphone):
     assert smartphone.name == 'Кофеварка'
 
 
-def test_instantiate_from_csv(cvs_file, class_item):
-    class_item.instantiate_from_csv(cvs_file)
+def test_instantiate_from_csv(csv_file, class_item):
+    class_item.instantiate_from_csv(csv_file)
     assert len(Item.all) == 5
 
 
@@ -69,3 +79,11 @@ def test_add(smartphone):
     assert smartphone + phone1 == 30
     with pytest.raises(ValueError):
         smartphone + phone2
+
+
+def test_instantiate_cvs_file_not_found(csv_not_found, class_item):
+    class_item.instantiate_from_csv(csv_not_found)
+
+
+def test_instantiate_csv_error(class_item, csv_broken):
+    class_item.instantiate_from_csv(csv_broken)
