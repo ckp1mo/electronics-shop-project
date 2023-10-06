@@ -1,4 +1,5 @@
 import csv
+from src.InstantiateCSVError import InstantiateCSVError
 
 
 class Item:
@@ -71,13 +72,20 @@ class Item:
         Очищает список ранее добавленных экземпляров
         """
         Item.all.clear()
-        with open(file, newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                name = row['name']
-                price = int(row['price'])
-                quantity = int(row['quantity'])
-                cls(name, price, quantity)
+        try:
+            with open(file, newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    if len(row) < 3:
+                        raise InstantiateCSVError
+                    name = row['name']
+                    price = int(row['price'])
+                    quantity = int(row['quantity'])
+                    cls(name, price, quantity)
+        except FileNotFoundError:
+            print('Отсутствует файл items.csv')
+        except InstantiateCSVError as ex:
+            print(ex.message)
 
     @staticmethod
     def string_to_number(str_number):
